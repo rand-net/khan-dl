@@ -1,0 +1,10 @@
+beautifulsoup4==4.9.3
+certifi==2020.12.5
+chardet==4.0.0
+idna==2.10
+prompt-toolkit==3.0.14
+requests==2.25.1
+soupsieve==2.1
+urllib3==1.26.3
+wcwidth==0.2.5
+youtube-dl==2021.1.24.1
