@@ -6,6 +6,7 @@ A python script to download courses from  [Khan Academy](https://www.khanacademy
 
 ```
 git clone https://github.com/rand-net/khan-dl
+cd khan-dl
 pip install -r requirements.txt
 ```
 
