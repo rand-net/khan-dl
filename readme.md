@@ -1,8 +1,6 @@
 # khan-dl
 
-A python script to download videos from  [Khan Academy](https://www.khanacademy.org)
-and name them  by using [youtube-dl](https://github.com/ytdl-org/youtube-dl) and
-[beautifulsoup4](https://pypi.org/project/beautifulsoup4/).
+A python script to download courses from  [Khan Academy](https://www.khanacademy.org) using [youtube-dl](https://github.com/ytdl-org/youtube-dl) and [beautifulsoup4](https://pypi.org/project/beautifulsoup4/).
 
 ## Installation
 
