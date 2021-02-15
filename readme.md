@@ -59,3 +59,11 @@ $ python khan-dl.py -c https://www.khanacademy.org/science/ap-physics-1
 $ python khan-dl.py -a
 
 ```
+
+
+## Other solutions
+
+Khan Academy is also available for offline usage through these Open Source projects:
+
+* [Kolibri](https://learningequality.org/kolibri/)
+* [Kiwix](https://www.kiwix.org/)
