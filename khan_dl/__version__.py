@@ -1,0 +1,8 @@
+__title__ = "khan_dl"
+__description__ = "A python package to download courses from Khan Academy."
+__url__ = "https://github.com/rand-net/khan-dl"
+__version__ = "2021.02.15"
+__author__ = "rand-net"
+__author_email__ = "linuctor@tutanota.com"
+__license__ = "MIT"
+__copyright__ = "Copyright 2020-2021 rand-net et al."
