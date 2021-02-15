@@ -22,6 +22,7 @@ optional arguments:
   -i, --interactive     Enter Interactive Course Selection Mode
   -c COURSE_URL, --course_url COURSE_URL
                         Enter Course URL
+  -a, --all             Download all Courses from all Domains
 ```
 
 * You can download courses interactively on a prompt, which will list all course
@@ -49,5 +50,12 @@ Downloading Videos....
 
 ```
 $ python khan-dl.py -c https://www.khanacademy.org/science/ap-physics-1
+
+```
+
+* Download all courses on traditional subjects like Math, Science, Computing, Humanities, Economics-Finance-Domain.
+
+```
+$ python khan-dl.py -a
 
 ```
