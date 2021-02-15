@@ -4,6 +4,8 @@ import re
 import requests
 import youtube_dl
 
+# TODO : Use join to add paths
+
 
 class Khan_DL:
     def __init__(self, output_rel_path, course_root_url):

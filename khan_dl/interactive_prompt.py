@@ -7,22 +7,29 @@ from prompt_toolkit.completion import (
 from bs4 import BeautifulSoup
 import requests
 
+
 def get_all_course_urls():
-    course_domains = ["Math", "Science", "Computing", "Humanities", "Economics-Finance-Domain"]
+    course_domains = [
+        "Math",
+        "Science",
+        "Computing",
+        "Humanities",
+        "Economics-Finance-Domain",
+    ]
     all_course_urls = []
     for course_domain in course_domains:
         print("Processing Course Domain: ", course_domain)
         course_url_list = []
-        course_list_page_url = (
-            "https://www.khanacademy.org/" + course_domain.lower()
-        )
+        course_list_page_url = "https://www.khanacademy.org/" + course_domain.lower()
 
         print("\nDownloading Course List...\n")
         # Download Selected Course Domain Page HTML
         course_list_page_source = requests.get(course_list_page_url).text
         course_list_page_html = BeautifulSoup(course_list_page_source, "lxml")
 
-        for courses_header_section in course_list_page_html.find_all("h2", class_="_158q6at"):
+        for courses_header_section in course_list_page_html.find_all(
+            "h2", class_="_158q6at"
+        ):
             course_header_tag = courses_header_section.find("a", class_="_dwmetq")
 
             course_header = courses_header_section.find("a", class_="_dwmetq").text
@@ -31,6 +38,7 @@ def get_all_course_urls():
             course_url_list.append("https://www.khanacademy.org" + course_header_slug)
         all_course_urls.extend(course_url_list)
     return all_course_urls
+
 
 def course_selection_prompt():
     # COURSE LIST URLs
