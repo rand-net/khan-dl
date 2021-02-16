@@ -4,19 +4,14 @@ A python script to download courses from  [Khan Academy](https://www.khanacademy
 
 ## Installation
 
-* Using pip
+* Some videos for certain courses were mixed with different output slugs prior to version 0.1.4.
+* Update to the latest version using pip.
 
 ```
-pip install khan-dl
+pip install khan-dl -U
 
 ```
 
-* From Source
-```
-git clone https://github.com/rand-net/khan-dl
-cd khan-dl
-pip install -r requirements.txt
-```
 
 ## Usage
 
