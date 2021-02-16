@@ -3,7 +3,7 @@ from .interactive_prompt import *
 import argparse
 import sys
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 
 
 def main(argv=None):

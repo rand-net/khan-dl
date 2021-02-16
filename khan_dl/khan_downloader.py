@@ -62,17 +62,17 @@ class Khan_DL:
             )
             current_youtube_id_list = list(dict.fromkeys(current_youtube_id_list))
 
+            for current_youtube_id in current_youtube_id_list:
+                self.youtube_id_list.append(current_youtube_id[13:24])
+
             # Genearate Full Course Slugs and Relative Youtube Ids List
-            for current_youtube_id, unit_sub_heads, unit_sub_head_body in zip(
-                current_youtube_id_list,
+            for unit_sub_heads, unit_sub_head_body in zip(
                 self.unit_page_html.find_all(
                     attrs={"data-test-id": "lesson-card-link"}
                 ),
                 self.unit_page_html.find_all("div", class_="_1o51yl6"),
             ):
 
-                # Append Youtube ids to the List
-                self.youtube_id_list.append(current_youtube_id[13:24])
                 video_counter = 0
 
                 # Find Individual Video Blocks and Validate whether it is video
