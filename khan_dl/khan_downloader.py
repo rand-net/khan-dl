@@ -110,7 +110,6 @@ class Khan_DL:
     def download_videos(self):
         print("\nDownloading Videos....\n")
         for output_file, video_id in zip(self.full_course_slugs, self.youtube_id_list):
-            print(self.full_course_slugs)
-            # youtube_url = "https://www.youtube.com/watch?v=" + video_id
-            # with youtube_dl.YoutubeDL({"outtmpl": output_file}) as ydl:
-            # ydl.download([youtube_url])
+            youtube_url = "https://www.youtube.com/watch?v=" + video_id
+            with youtube_dl.YoutubeDL({"outtmpl": output_file}) as ydl:
+                ydl.download([youtube_url])
