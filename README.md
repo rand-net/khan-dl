@@ -4,6 +4,14 @@ A python script to download courses from  [Khan Academy](https://www.khanacademy
 
 ## Installation
 
+* Using pip
+
+```
+pip install khan-dl
+
+```
+
+* From Source
 ```
 git clone https://github.com/rand-net/khan-dl
 cd khan-dl
@@ -13,7 +21,7 @@ pip install -r requirements.txt
 ## Usage
 
 ```
-$ python khan-dl.py -h
+$ khan-dl -h
 
 usage: khan-dl.py [-h] [-i] [-c COURSE_URL]
 
@@ -29,7 +37,7 @@ optional arguments:
     domains and their respective courses available with tab completion.
 
 ```
-$ python khan-dl.py -i
+$ khan-dl -i
 
 Course Domain: Math
 Selected Course Domain: Math
@@ -49,13 +57,13 @@ Downloading Videos....
 * Download a specific course.
 
 ```
-$ python khan-dl.py -c https://www.khanacademy.org/science/ap-physics-1
+$  khan-dl -c https://www.khanacademy.org/science/ap-physics-1
 
 ```
 
 * Download all courses on traditional subjects like Math, Science, Computing, Humanities, Economics-Finance-Domain.
 
 ```
-$ python khan-dl.py -a
+$ khan-dl.py -a
 
 ```
