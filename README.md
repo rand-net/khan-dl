@@ -71,6 +71,6 @@ $ khan-dl.py -a
 * Download all courses on traditional subjects like Math, Science, Computing, Humanities, Economics-Finance-Domain.
 
 ```
-$ python khan-dl.py -a
+$ khan-dl.py -a
 
 ```
