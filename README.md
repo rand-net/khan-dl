@@ -5,7 +5,7 @@ A python script to download courses from  [Khan Academy](https://www.khanacademy
 ## Installation
 
 * Some videos for certain courses were mixed with different output slugs prior to version 0.1.4.
-* Update to the latest version using pip.
+* ⚠ Update to the latest version using pip.
 
 ```
 pip install khan-dl -U
