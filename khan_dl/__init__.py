@@ -6,6 +6,14 @@ import sys
 __version__ = "0.1.4"
 
 
+def download(downloader):
+    downloader.get_course_html()
+    downloader.generate_unit_slugs()
+    downloader.generate_unit_urls()
+    downloader.generate_course_slugs_video_ids()
+    downloader.download_videos()
+
+
 def main(argv=None):
     argv = sys.argv if argv is None else argv
     argparser = argparse.ArgumentParser()
@@ -34,11 +42,7 @@ def main(argv=None):
 
         khan_down = Khan_DL("", selected_course_url)
         print("Generating Path Slugs..... ")
-        khan_down.get_course_html()
-        khan_down.generate_unit_slugs()
-        khan_down.generate_unit_urls()
-        khan_down.generate_course_slugs_video_ids()
-        khan_down.download_videos()
+        download(khan_down)
 
     elif args.course_url:
         print("Looking up " + args.course_url + " .....")
@@ -46,11 +50,7 @@ def main(argv=None):
         khan_down = Khan_DL("", selected_course_url)
 
         print("Generating Path Slugs..... ")
-        khan_down.get_course_html()
-        khan_down.generate_unit_slugs()
-        khan_down.generate_unit_urls()
-        khan_down.generate_course_slugs_video_ids()
-        khan_down.download_videos()
+        download(khan_down)
 
     elif args.all:
         print("Downloading all Courses from all Domains")
@@ -59,8 +59,4 @@ def main(argv=None):
         for course_url in all_course_urls:
 
             khan_down = Khan_DL("", course_url)
-            khan_down.get_course_html()
-            khan_down.generate_unit_slugs()
-            khan_down.generate_unit_urls()
-            khan_down.generate_course_slugs_video_ids()
-            khan_down.download_videos()
+            download(khan_down)
