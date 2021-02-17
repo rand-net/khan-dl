@@ -18,7 +18,7 @@ pip install khan-dl -U
 ```
 $ khan-dl -h
 
-usage: khan-dl.py [-h] [-i] [-c COURSE_URL]
+usage: khan-dl [-h] [-i] [-c COURSE_URL]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -59,16 +59,10 @@ $  khan-dl -c https://www.khanacademy.org/science/ap-physics-1
 * Download all courses on traditional subjects like Math, Science, Computing, Humanities, Economics-Finance-Domain.
 
 ```
-$ khan-dl.py -a
+$ khan-dl -a
 
 ```
 
-* Download all courses on traditional subjects like Math, Science, Computing, Humanities, Economics-Finance-Domain.
-
-```
-$ khan-dl.py -a
-
-```
 
 ## Other solutions
 
