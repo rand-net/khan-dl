@@ -2,6 +2,10 @@
 
 A python script to download courses from  [Khan Academy](https://www.khanacademy.org) using [youtube-dl](https://github.com/ytdl-org/youtube-dl) and [beautifulsoup4](https://pypi.org/project/beautifulsoup4/).
 
+[![Generic badge](https://img.shields.io/badge/Status-Development-<COLOR>.svg)](https://shields.io/)
+![PyPI](https://img.shields.io/pypi/v/khan-dl?style=flat-square)
+![GitHub](https://img.shields.io/github/license/rand-net/khan-dl?style=flat-square)
+
 ## Installation
 
 * Some videos for certain courses were mixed with different output slugs prior to version 0.1.4.
@@ -12,6 +16,7 @@ pip install khan-dl -U
 
 ```
 
+* ⚠ It seems youtube id extraction for some courses weren't even fixed in 0.1.4.
 
 ## Usage
 
