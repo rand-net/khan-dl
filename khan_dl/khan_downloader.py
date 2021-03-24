@@ -3,6 +3,9 @@ import os
 import re
 import requests
 import youtube_dl
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
+from topic_matcher import *
 
 
 class Khan_DL:
@@ -107,9 +110,34 @@ class Khan_DL:
                     video_counter += 1
                 unit_counter += 1
 
-    def download_videos(self):
-        print("\nDownloading Videos....\n")
-        for output_file, video_id in zip(self.full_course_slugs, self.youtube_id_list):
+   def download_videos(self):
+        # Download Youtube Titles
+        print("Downloading Youtube Titles")
+        video_titles_list = []
+        video_id_titles_dict = {}
+        for video_id in self.youtube_id_list:
+            video_url = "http://www.youtube.com/watch?v=" + video_id
+            youtube_dl_opts = {}
+            with youtube_dl.YoutubeDL(youtube_dl_opts) as ydl:
+                info_dict = ydl.extract_info(video_url, download=False)
+                video_url = info_dict.get("url", None)
+                video_id = info_dict.get("id", None)
+                video_title = info_dict.get("title", None)
+                video_title = video_title.split("|")[0]
+                video_id_titles_dict[video_title] = video_id
+                video_titles_list.append(video_title)
+                # print(video_title)
+
+        print("\n\n\n")
+        print(self.video_topics_list)
+        print(video_id_titles_dict)
+        topic_match = Topic_Matcher(self.video_topics_list, video_id_titles_dict)
+        final_dict = topic_match.single_pass()
+        print(final_dict)
+        matched_video_id_list = list(final_dict.values())
+
+        print("Downloading Videos..")
+        for output_file, video_id in zip(self.full_course_slugs, matched_video_id_list):
             youtube_url = "https://www.youtube.com/watch?v=" + video_id
             with youtube_dl.YoutubeDL({"outtmpl": output_file}) as ydl:
                 ydl.download([youtube_url])
