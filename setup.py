@@ -31,6 +31,7 @@ setup(
         "lxml",
         "youtube-dl",
         "fuzzywuzzy",
+        "python-Levenshtein",
     ],
     keywords=["khan academy", "khan academy downloader", "video downloader"],
 )
