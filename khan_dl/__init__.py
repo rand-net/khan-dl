@@ -2,8 +2,9 @@ from .khan_downloader import *
 from .interactive_prompt import *
 import argparse
 import sys
+from art import *
 
-__version__ = "0.1.7"
+__version__ = "1.0.0"
 
 
 def main(argv=None):
@@ -30,6 +31,7 @@ def main(argv=None):
     args = argparser.parse_args()
 
     if args.interactive_prompt:
+        tprint("KHAN-DL")
         selected_course_url = course_selection_prompt()
 
         khan_down = Khan_DL("", selected_course_url)
@@ -41,6 +43,7 @@ def main(argv=None):
         khan_down.download_videos()
 
     elif args.course_url:
+        tprint("KHAN-DL")
         print("Looking up " + args.course_url + " .....")
         selected_course_url = args.course_url
         khan_down = Khan_DL("", selected_course_url)
@@ -53,6 +56,7 @@ def main(argv=None):
         khan_down.download_videos()
 
     elif args.all:
+        tprint("KHAN-DL")
         print("Downloading all Courses from all Domains")
         all_course_urls = get_all_course_urls()
 
