@@ -1,5 +1,9 @@
+import warnings
 from fuzzywuzzy import process
 from fuzzywuzzy import fuzz
+
+
+warnings.filterwarnings("ignore")
 
 
 class Topic_Matcher:
