@@ -12,14 +12,14 @@ A python script to download courses from  [Khan Academy](https://www.khanacademy
 * In order to resolve the wrong file name issue, titles of lessons from the webpage
     and the youtube video have to be matched against one another
 
-* In matching those titles, some of the lesson titles from webpage are quite
+* In matching those titles, few of the lesson titles from webpage are quite
 divergent from their respective youtube tiles
 
 * Eg., webpage_lesson_title = "Addition and subtraction word problems:gorillas", youtube_id_titles = ["Exercising gorillas", "Comparison word problems: marbles"]. The latter youtube title is more similar, but it is an entirely different video.
 
 * If there is a solution to match these titles, submit a pull request.
 
-* TL;DR Some videos will be saved with wrong file name.
+* TL;DR Few videos will be saved with wrong file name.
 
 
 ## Installation
