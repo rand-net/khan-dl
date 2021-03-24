@@ -8,7 +8,7 @@ README = (HERE / "README.md").read_text()
 # This call to setup() does all the work
 setup(
     name="khan-dl",
-    version="0.1.6",
+    version="0.1.7",
     description="Download courses from khanacademy.org",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -24,6 +24,7 @@ setup(
     include_package_data=True,
     entry_points={"console_scripts": ["khan-dl = khan_dl.__init__:main"]},
     install_requires=[
+        "art",
         "beautifulsoup4",
         "prompt-toolkit",
         "requests",
