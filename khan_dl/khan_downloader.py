@@ -5,7 +5,7 @@ import requests
 import youtube_dl
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
-from topic_matcher import *
+from .topic_matcher import *
 
 
 class Khan_DL:
