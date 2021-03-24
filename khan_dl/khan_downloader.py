@@ -3,6 +3,7 @@ import os
 import re
 import requests
 import youtube_dl
+from art import *
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 from .topic_matcher import *
@@ -12,6 +13,7 @@ class Khan_DL:
     def __init__(self, output_rel_path, course_root_url):
         self.course_root_url = course_root_url
         self.output_rel_path = os.getcwd() + "/" + output_rel_path
+        tprint("KHAN-DL")
 
     def get_course_html(self):
         # Get Course Root Page HTML

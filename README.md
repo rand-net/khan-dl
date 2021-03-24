@@ -24,7 +24,7 @@ divergent from their respective youtube tiles
 
 ## Installation
 
-* Some videos for certain courses were mixed with different output slugs prior to version 0.1.5.
+* Some videos for certain courses were mixed with different output slugs prior to version 0.1.5
 * ⚠ Update to the latest version using pip.
 
 ```
