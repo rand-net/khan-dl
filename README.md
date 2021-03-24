@@ -19,7 +19,7 @@ divergent from their respective youtube tiles
 
 * If there is a solution to match these titles, submit a pull request.
 
-* TL;DR Some videos will be saved with wrong file name.
+* **TL;DR Few videos will be saved with wrong file name for some courses.**
 
 
 ## Installation
