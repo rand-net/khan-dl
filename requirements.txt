@@ -5,6 +5,7 @@ chardet==4.0.0
 idna==2.10
 lxml==4.6.2
 prompt-toolkit==3.0.14
+python-Levenshtein==0.12.2
 requests==2.25.1
 soupsieve==2.1
 urllib3==1.26.3
