@@ -8,7 +8,7 @@ README = (HERE / "README.md").read_text()
 # This call to setup() does all the work
 setup(
     name="khan-dl",
-    version="0.1.4",
+    version="0.1.5",
     description="Download courses from khanacademy.org",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -29,6 +29,7 @@ setup(
         "requests",
         "lxml",
         "youtube-dl",
+        "fuzzywuzzy",
     ],
     keywords=["khan academy", "khan academy downloader", "video downloader"],
 )
