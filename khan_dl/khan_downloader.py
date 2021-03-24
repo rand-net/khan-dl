@@ -110,7 +110,7 @@ class Khan_DL:
                     video_counter += 1
                 unit_counter += 1
 
-   def download_videos(self):
+    def download_videos(self):
         # Download Youtube Titles
         print("Downloading Youtube Titles")
         video_titles_list = []
