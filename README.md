@@ -29,7 +29,6 @@ divergent from their respective youtube tiles
 
 ```
 pip install khan-dl -U
-
 ```
 
 
@@ -73,14 +72,12 @@ Downloading Videos....
 
 ```
 $  khan-dl -c https://www.khanacademy.org/science/ap-physics-1
-
 ```
 
 * Download all courses on traditional subjects like Math, Science, Computing, Humanities, Economics-Finance-Domain.
 
 ```
 $ khan-dl -a
-
 ```
 
 
