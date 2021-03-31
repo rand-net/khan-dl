@@ -4,7 +4,7 @@ import argparse
 import sys
 from art import *
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 
 # def main(argv=None):
