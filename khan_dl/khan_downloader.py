@@ -127,10 +127,10 @@ class Khan_DL:
                 # print(video_title)
 
         print("\n\n\n")
-        print(self.video_topics_list)
+        print(video_titles_list)
         print(video_id_titles_dict)
-        topic_match = Topic_Matcher(self.video_topics_list, video_id_titles_dict)
-        final_dict = topic_match.single_pass()
+        topic_match = Topic_Matcher(video_titles_list, video_id_titles_dict)
+        final_dict = topic_match.first_pass()
         print(final_dict)
         matched_video_id_list = list(final_dict.values())
 
