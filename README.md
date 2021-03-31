@@ -29,7 +29,6 @@ divergent from their respective youtube tiles
 
 ```
 pip install khan-dl -U
-
 ```
 
 
@@ -66,21 +65,18 @@ Selected Course Domain: Linear algebra
 Generating Path Slugs.....
 
 Downloading Videos....
-
 ```
 
 * Download a specific course.
 
 ```
 $  khan-dl -c https://www.khanacademy.org/science/ap-physics-1
-
 ```
 
 * Download all courses on traditional subjects like Math, Science, Computing, Humanities, Economics-Finance-Domain.
 
 ```
 $ khan-dl -a
-
 ```
 
 
