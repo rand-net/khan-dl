@@ -13,7 +13,7 @@ A python script to download courses from  [Khan Academy](https://www.khanacademy
     and the youtube video have to be matched against one another
 
 * In matching those titles, some of the lesson titles from webpage are quite
-divergent from their respective youtube tiles
+divergent from their respective youtube titles
 
 * Eg., webpage_lesson_title = "Addition and subtraction word problems:gorillas", youtube_id_titles = ["Exercising gorillas", "Comparison word problems: marbles"]. The latter youtube title is more similar, but it is an entirely different video.
 
