@@ -7,20 +7,8 @@ A python script to download courses from  [Khan Academy](https://www.khanacademy
 ![GitHub](https://img.shields.io/github/license/rand-net/khan-dl?style=flat-square)
 
 
-## ⚠ Caution
-* Each Unit webpage(https://www.khanacademy.org/math/cc-1st-grade-math/cc-1st-place-value) currently contains more youtube ids than the lessons themselves.
-* In order to resolve the wrong file name issue, titles of lessons from the webpage
-    and the youtube video have to be matched against one another
-
-* In matching those titles, some of the lesson titles from webpage are quite
-divergent from their respective youtube titles
-
-* Eg., webpage_lesson_title = "Addition and subtraction word problems:gorillas", youtube_id_titles = ["Exercising gorillas", "Comparison word problems: marbles"]. The latter youtube title is more similar, but it is an entirely different video.
-
-* If there is a solution to match these titles, submit a pull request.
-
-* **TL;DR Few videos will be saved with wrong file name for some courses.**
-
+## ⚠ Caveat
+* A few videos are saved with wrong file name. For more info, refer [issue #19](https://github.com/rand-net/khan-dl/issues/19).
 
 ## Installation
 
