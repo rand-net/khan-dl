@@ -1,67 +1,49 @@
-from .khan_downloader import *
-from .interactive_prompt import *
+from .khan_dl import *
 import argparse
 import sys
 from art import *
 
-__version__ = "1.0.1"
+__version__ = "1.0.7"
 
 
-# def main(argv=None):
-# argv = sys.argv if argv is None else argv
-argparser = argparse.ArgumentParser()
-argparser.add_argument(
-    "-i",
-    "--interactive",
-    help="Enter Interactive Course Selection Mode",
-    dest="interactive_prompt",
-    action="store_true",
-)
-argparser.add_argument(
-    "-c", "--course_url", help="Enter Course URL",
-)
+def main(argv=None):
+    argv = sys.argv if argv is None else argv
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument(
+        "-i",
+        "--interactive",
+        help="Enter Interactive Course Selection Mode",
+        dest="interactive_prompt",
+        action="store_true",
+    )
+    argparser.add_argument(
+        "-c", "--course_url", help="Enter Course URL",
+    )
 
-argparser.add_argument(
-    "-a", "--all", help="Download all Courses from all Domains", action="store_true",
-)
+    argparser.add_argument(
+        "-a",
+        "--all",
+        help="Download all Courses from all Domains",
+        action="store_true",
+    )
 
-args = argparser.parse_args()
+    args = argparser.parse_args()
 
-if args.interactive_prompt:
-    tprint("KHAN-DL")
-    selected_course_url = course_selection_prompt()
+    if args.interactive_prompt:
+        tprint("KHAN-DL")
+        khan_down = KhanDL()
+        khan_down.download_course_interactive()
 
-    khan_down = Khan_DL("", selected_course_url)
-    print("Generating Path Slugs..... ")
-    khan_down.get_course_html()
-    khan_down.generate_unit_slugs()
-    khan_down.generate_unit_urls()
-    khan_down.generate_course_slugs_video_ids()
-    khan_down.download_videos()
+    elif args.course_url:
+        tprint("KHAN-DL")
+        print("Looking up " + args.course_url + "...")
+        selected_course_url = args.course_url
+        khan_down = KhanDL()
+        khan_down.download_course_selected(selected_course_url)
 
-elif args.course_url:
-    tprint("KHAN-DL")
-    print("Looking up " + args.course_url + " .....")
-    selected_course_url = args.course_url
-    khan_down = Khan_DL("", selected_course_url)
-
-    print("Generating Path Slugs..... ")
-    khan_down.get_course_html()
-    khan_down.generate_unit_slugs()
-    khan_down.generate_unit_urls()
-    khan_down.generate_course_slugs_video_ids()
-    khan_down.download_videos()
-
-elif args.all:
-    tprint("KHAN-DL")
-    print("Downloading all Courses from all Domains")
-    all_course_urls = get_all_course_urls()
-
-    for course_url in all_course_urls:
-
-        khan_down = Khan_DL("", course_url)
-        khan_down.get_course_html()
-        khan_down.generate_unit_slugs()
-        khan_down.generate_unit_urls()
-        khan_down.generate_course_slugs_video_ids()
-        khan_down.download_videos()
+    elif args.all:
+        tprint("KHAN-DL")
+        khan_down = KhanDL()
+        all_course_urls = khan_down.get_all_courses()
+        for course_url in all_course_urls:
+            khan_down.download_course_selected(course_url)

@@ -2,13 +2,9 @@
 
 A python script to download courses from  [Khan Academy](https://www.khanacademy.org) using [youtube-dl](https://github.com/ytdl-org/youtube-dl) and [beautifulsoup4](https://pypi.org/project/beautifulsoup4/).
 
-[![Generic badge](https://img.shields.io/badge/Status-Development-<COLOR>.svg)](https://shields.io/)
 ![PyPI](https://img.shields.io/pypi/v/khan-dl?style=flat-square)
 ![GitHub](https://img.shields.io/github/license/rand-net/khan-dl?style=flat-square)
 
-
-## ⚠ Caveat
-* A few videos are saved with wrong file name. For more info, refer [issue #19](https://github.com/rand-net/khan-dl/issues/19).
 
 ## Installation
 
@@ -36,31 +32,88 @@ optional arguments:
 
 ```
 $ khan-dl -i
+ _  __ _   _     _     _   _         ____   _
+| |/ /| | | |   / \   | \ | |       |  _ \ | |
+| ' / | |_| |  / _ \  |  \| | _____ | | | || |
+| . \ |  _  | / ___ \ | |\  ||_____|| |_| || |___
+|_|\_\|_| |_|/_/   \_\|_| \_|       |____/ |_____|
 
-Course Domain: Math
-Selected Course Domain: Math
 
-Downloading Course List...
 
-Course: Linear algebra
+Domain: Math
+Selected Domain: math
 
-Selected Course Domain: Linear algebra
+Downloading Courses...
+
+Course: Early math
+Selected Course: Early math
+
+
+Course URL: https://www.khanacademy.org/math/early-math
 
 Generating Path Slugs.....
-
-Downloading Videos....
 ```
 
 * Download a specific course.
 
 ```
-$  khan-dl -c https://www.khanacademy.org/science/ap-physics-1
+$  khan-dl -c "https://www.khanacademy.org/math/early-math"
+ _  __ _   _     _     _   _         ____   _
+| |/ /| | | |   / \   | \ | |       |  _ \ | |
+| ' / | |_| |  / _ \  |  \| | _____ | | | || |
+| . \ |  _  | / ___ \ | |\  ||_____|| |_| || |___
+|_|\_\|_| |_|/_/   \_\|_| \_|       |____/ |_____|
+
+
+Looking up https://www.khanacademy.org/math/early-math...
+
+Course URL: https://www.khanacademy.org/math/early-math
+
+Generating Path Slugs...
+
 ```
 
 * Download all courses on traditional subjects like Math, Science, Computing, Humanities, Economics-Finance-Domain.
 
 ```
 $ khan-dl -a
+
+ _  __ _   _     _     _   _         ____   _
+| |/ /| | | |   / \   | \ | |       |  _ \ | |
+| ' / | |_| |  / _ \  |  \| | _____ | | | || |
+| . \ |  _  | / ___ \ | |\  ||_____|| |_| || |___
+|_|\_\|_| |_|/_/   \_\|_| \_|       |____/ |_____|
+
+
+Downloading all Courses from all Domains...
+Selected Domain:  math
+
+Downloading Courses...
+
+Selected Domain:  science
+
+Downloading Courses...
+
+Selected Domain:  computing
+
+Downloading Courses...
+
+Selected Domain:  humanities
+
+Downloading Courses...
+
+Selected Domain:  economics-finance-domain
+
+Downloading Courses...
+
+Selected Domain:  ela
+
+Downloading Courses...
+
+
+Course URL: https://www.khanacademy.org/math/early-math
+
+Generating Path Slugs...
 ```
 
 
