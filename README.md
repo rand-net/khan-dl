@@ -47,11 +47,13 @@ Downloading Courses...
 
 Course: Early math
 Selected Course: Early math
-
-
 Course URL: https://www.khanacademy.org/math/early-math
 
 Generating Path Slugs.....
+
+
+Collecting Youtube IDs: 100.0% [========================================================================================================================================>]   4/  4 eta [00:00]
+Downloading Videos:   0.0% [>                                                                                                                                          ]   0/ 75 eta [?:??:??]
 ```
 
 * Download a specific course.
@@ -66,12 +68,13 @@ $  khan-dl -c "https://www.khanacademy.org/math/early-math"
 
 
 Looking up https://www.khanacademy.org/math/early-math...
-
 Course URL: https://www.khanacademy.org/math/early-math
 
 Generating Path Slugs...
 
-```
+Collecting Youtube IDs: 100.0% [========================================================================================================================================>]   4/  4 eta [00:00]
+Downloading Videos:   0.0% [>                                                                                                                                          ]   0/ 75 eta [?:??:??]
+ ```
 
 * Download all courses on traditional subjects like Math, Science, Computing, Humanities, Economics-Finance-Domain.
 
@@ -114,6 +117,10 @@ Downloading Courses...
 Course URL: https://www.khanacademy.org/math/early-math
 
 Generating Path Slugs...
+
+
+Collecting Youtube IDs: 100.0% [========================================================================================================================================>]   4/  4 eta [00:00]
+Downloading Videos:   0.0% [>                                                                                                                                          ]   0/ 75 eta [?:??:??]
 ```
 
 

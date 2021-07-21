@@ -2,6 +2,7 @@ import os
 import platform
 import requests
 import sys
+import logging
 import youtube_dl
 
 from typing import List, Dict, Tuple
@@ -9,6 +10,9 @@ from art import *
 from bs4 import BeautifulSoup
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import FuzzyWordCompleter
+from prompt_toolkit.shortcuts import ProgressBar
+from prompt_toolkit.shortcuts.progress_bar import formatters
+from prompt_toolkit.styles import Style
 
 VIDEO_SITE_URL = "https://www.youtube.com/watch?v="
 ROOT_URL = "https://www.khanacademy.org"
@@ -46,6 +50,18 @@ def clear_screen():
         os.system("clear")
     elif platform.system() == "Windows":
         os.system("cls")
+
+
+# Youtube-dl NoLogger
+class MyLogger(object):
+    def debug(self, msg):
+        pass
+
+    def warning(self, msg):
+        pass
+
+    def error(self, msg):
+        print(msg)
 
 
 class KhanDL:
@@ -117,6 +133,7 @@ class KhanDL:
 
         print("Selected Domain: {}".format(DOMAINS[selected_domain]))
         self.domain = DOMAINS[selected_domain]
+        logging.info("Domain Selected")
 
     def course_prompt(self):
         """Returns URL for the selected course"""
@@ -127,8 +144,9 @@ class KhanDL:
         # Course Selection Prompt
         courses_completer = FuzzyWordCompleter(courses)
         selected_course = courses.index(prompt("Course: ", completer=courses_completer))
-        print("Selected Course: {}\n".format(courses[selected_course]))
+        print("Selected Course: {}".format(courses[selected_course]))
         self.course_url = courses_url[selected_course]
+        logging.info("Course Selected")
 
     def get_all_courses(self) -> List[str]:
         """ Returns URL for all courses """
@@ -146,7 +164,7 @@ class KhanDL:
     def get_course_page(self):
         """Retrieves course page html """
 
-        print("\nCourse URL: {}".format(self.course_url))
+        print("Course URL: {}".format(self.course_url))
         try:
             self.course_page = BeautifulSoup(requests.get(self.course_url).text, "lxml")
         except requests.ConnectionError as e:
@@ -162,7 +180,7 @@ class KhanDL:
             print("Timeout Error:", errt)
             sys.exit(1)
         except requests.exceptions.RequestException as err:
-            print("OOps: Something Else", err)
+            print("Oops: Something Else", err)
             sys.exit(1)
 
     def get_course_title(self):
@@ -170,12 +188,16 @@ class KhanDL:
 
         course_title = self.course_page.find(attrs=COURSE_TITLE)
         self.course_title = course_title.text.replace(" ", "_")
+        logging.debug("course_title:{}".format(self.course_title))
+        logging.info("Course title retrieved")
 
     def get_course_unit_titles(self):
         """Retrieves course unit titles """
 
         for title in self.course_page.find_all(attrs=COURSE_UNIT_TITLE):
             self.course_unit_titles.append(title.text)
+        logging.debug("course_unit_titles:{}".format(self.course_unit_titles))
+        logging.info("Course unit titles retrieved")
 
     def get_course_unit_slugs(self):
         """Retrieves course unit slugs """
@@ -186,12 +208,16 @@ class KhanDL:
                 self.course_title + "/" + str(counter) + "_" + title.replace(" ", "_")
             )
             counter += 1
+        logging.debug("course_unit_slugs:{}".format(self.course_unit_slugs))
+        logging.info("Course unit slugs generated")
 
     def get_course_unit_urls(self):
         """Retrieves course unit urls"""
 
         for url in self.course_page.find_all(attrs=COURSE_UNIT_TITLE):
             self.course_unit_urls.append(url["href"])
+        logging.debug("course_unit_urls:{}".format(self.course_unit_urls))
+        logging.info("Course unit urls retrieved")
 
     def get_course_all_slugs(self):
         """Generate slugs for all units"""
@@ -231,8 +257,10 @@ class KhanDL:
                 course_unit_page.find_all(attrs=COURSE_SUBUNIT_TITLE_ATTRS),
                 course_unit_page.find_all(
                     COURSE_SUBUNIT_BODY["tag"], class_=COURSE_SUBUNIT_BODY["class"]
-                ),  # _1o51yl6
+                ),
             ):
+
+                logging.debug("course_subunit_title:{}".format(course_subunit_title))
                 lesson_counter = 0
                 # ->  Lesson Block
                 for course_lesson_body in course_subunit_body.find_all(
@@ -250,7 +278,9 @@ class KhanDL:
                     course_lesson_aria_label = course_lesson_span[0][
                         COURSE_LESSON_LABEL
                     ]
-
+                    logging.debug(
+                        "course_lesson_aria_label:{}".format(course_lesson_aria_label)
+                    )
                     # ->  Lesson Title
                     # Check whether lesson block is a video
                     if course_lesson_aria_label == "Video":
@@ -259,6 +289,9 @@ class KhanDL:
                             class_=COURSE_LESSON_TITLE["class"],
                         )
 
+                        logging.debug(
+                            "course_lesson_title:{}".format(lesson_title.text)
+                        )
                         self.lesson_titles.append(lesson_title.text)
                         self.course_all_slugs.append(
                             self.output_rel_path
@@ -278,54 +311,73 @@ class KhanDL:
                 unit_lessons_counter += lesson_counter
                 subunit_couter += 1
             self.unit_slugs_counter[course_unit_url] = unit_lessons_counter
+        logging.info("Course - All slugs generated")
 
     def get_course_youtube_ids(self):
         """Retrieves youtube id per unit"""
 
-        for unit_url in self.course_unit_urls:
-            unit_url = ROOT_URL + unit_url
-            youtube_dl_opts = {}
-            clear_screen()
-            tprint("KHAN-DL")
-            print("Selected Course: {}\n\n".format(self.course_url))
-            try:
-                with youtube_dl.YoutubeDL(youtube_dl_opts) as ydl:
-                    info_dict = ydl.extract_info(unit_url, download=False)
-                    lessons_counter = 0
-                    for video in info_dict["entries"]:
-                        video_id = video.get("id", None)
-                        self.lesson_youtube_ids.append(video_id)
-                        lessons_counter += 1
-            except Exception as e:
-                print("Youtube-dl: An error occured!", e)
-                sys.exit(1)
-            self.unit_ids_counter[unit_url] = lessons_counter
+        with ProgressBar() as pb:
+            for i, unit_url in zip(
+                pb(range(len(self.course_unit_urls)), label="Collecting Youtube IDs:"),
+                self.course_unit_urls,
+            ):
+                unit_url = ROOT_URL + unit_url
+                youtube_dl_opts = {
+                    "logger": MyLogger(),
+                    "retries": 20,
+                }
+                try:
+                    with youtube_dl.YoutubeDL(youtube_dl_opts) as ydl:
+                        info_dict = ydl.extract_info(unit_url, download=False)
+                        logging.debug(
+                            "Collection youtube ids for unit:{}".format(unit_url)
+                        )
+                        lessons_counter = 0
+                        for video in info_dict["entries"]:
+                            video_id = video.get("id", None)
+                            self.lesson_youtube_ids.append(video_id)
+                            lessons_counter += 1
+                except Exception as e:
+                    print("Youtube-dl: An error occured!", e)
+                    sys.exit(1)
+                self.unit_ids_counter[unit_url] = lessons_counter
+        logging.info("Course - Collected Youtube IDs")
 
     def download_course_videos(self):
         """Downloads Course Videos"""
 
-        print("Downloading Videos..")
-
         counter = 0
         number_of_videos = len(self.course_all_slugs)
-        for lesson_output_file, lesson_video_id in zip(
-            self.course_all_slugs, self.lesson_youtube_ids
-        ):
-            lesson_youtube_url = VIDEO_SITE_URL + lesson_video_id
-            clear_screen()
 
-            try:
-                with youtube_dl.YoutubeDL({"outtmpl": lesson_output_file}) as ydl:
-                    tprint("KHAN-DL")
-                    print("Selected Course: {}\n\n".format(self.course_url))
-                    print(
-                        "Downloading video {} of {}".format(counter, number_of_videos)
-                    )
-                    ydl.download([lesson_youtube_url])
-                    counter += 1
-            except Exception as e:
-                print("Youtube-dl: An error occured!", e)
-                sys.exit(1)
+        with ProgressBar() as pb:
+            for i, lesson_output_file, lesson_video_id in zip(
+                pb(range(len(self.lesson_youtube_ids)), label="Downloading Videos:"),
+                self.course_all_slugs,
+                self.lesson_youtube_ids,
+            ):
+                lesson_youtube_url = VIDEO_SITE_URL + lesson_video_id
+
+                youtube_dl_opts = {
+                    "logger": MyLogger(),
+                    "outtmpl": lesson_output_file,
+                    "retries": 20,
+                }
+                try:
+                    with youtube_dl.YoutubeDL(youtube_dl_opts) as ydl:
+                        logging.debug(
+                            "Downloading video[{}] {} of {}:".format(
+                                lesson_youtube_url, counter, number_of_videos
+                            )
+                        )
+                        ydl.download([lesson_youtube_url])
+                        counter += 1
+                except Exception as e:
+                    print("Youtube-dl: An error occured!", e)
+                    sys.exit(1)
+                logging.info(
+                    "Course lesson video[{}]downloaded".format(lesson_video_id)
+                )
+            logging.info("Course videos downloaded")
 
     def download_course_interactive(self):
         """Downloads the chosen course"""
@@ -337,13 +389,13 @@ class KhanDL:
         self.get_course_unit_slugs()
         self.get_course_unit_urls()
 
-        print("\nGenerating Path Slugs...")
+        print("\nGenerating Path Slugs...\n")
         self.get_course_all_slugs()
         self.get_course_youtube_ids()
         self.download_course_videos()
 
-    def download_course_selected(self, course_url: str):
-        """Downloads the selected course"""
+    def download_course_given(self, course_url: str):
+        """Downloads the given course"""
         self.course_url = course_url
         self.get_course_page()
         self.get_course_title()
@@ -351,7 +403,7 @@ class KhanDL:
         self.get_course_unit_slugs()
         self.get_course_unit_urls()
 
-        print("\nGenerating Path Slugs...")
+        print("\nGenerating Path Slugs...\n")
         self.get_course_all_slugs()
         self.get_course_youtube_ids()
         self.download_course_videos()
