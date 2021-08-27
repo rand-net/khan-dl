@@ -3,9 +3,9 @@ import logging.handlers
 from .khan_dl import *
 import argparse
 import sys
-from art import *
+from art import tprint
 
-__version__ = "1.0.9"
+__version__ = "1.2.1"
 
 
 def set_log_level(args):
@@ -30,7 +30,9 @@ def main(argv=None):
         action="store_true",
     )
     argparser.add_argument(
-        "-c", "--course_url", help="Enter Course URL",
+        "-c",
+        "--course_url",
+        help="Enter Course URL",
     )
 
     argparser.add_argument(

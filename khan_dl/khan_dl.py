@@ -3,16 +3,14 @@ import platform
 import requests
 import sys
 import logging
+from youtube_dl.utils import DownloadError
 import youtube_dl
 
 from typing import List, Dict, Tuple
-from art import *
 from bs4 import BeautifulSoup
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import FuzzyWordCompleter
 from prompt_toolkit.shortcuts import ProgressBar
-from prompt_toolkit.shortcuts.progress_bar import formatters
-from prompt_toolkit.styles import Style
 
 VIDEO_SITE_URL = "https://www.youtube.com/watch?v="
 ROOT_URL = "https://www.khanacademy.org"
@@ -61,7 +59,7 @@ class MyLogger(object):
         pass
 
     def error(self, msg):
-        print(msg)
+        pass
 
 
 class KhanDL:
@@ -325,22 +323,37 @@ class KhanDL:
                 youtube_dl_opts = {
                     "logger": MyLogger(),
                     "retries": 20,
+                    "ignoreerrors:": True,
+                    "skip_download": True,
                 }
-                try:
-                    with youtube_dl.YoutubeDL(youtube_dl_opts) as ydl:
-                        info_dict = ydl.extract_info(unit_url, download=False)
+                with youtube_dl.YoutubeDL(youtube_dl_opts) as ydl:
+                    lessons_counter = 0
+                    try:
                         logging.debug(
                             "Collection youtube ids for unit:{}".format(unit_url)
                         )
-                        lessons_counter = 0
+                        info_dict = ydl.extract_info(unit_url, download=False)
                         for video in info_dict["entries"]:
                             video_id = video.get("id", None)
                             self.lesson_youtube_ids.append(video_id)
                             lessons_counter += 1
-                except Exception as e:
-                    print("Youtube-dl: An error occured!", e)
-                    sys.exit(1)
+                    except DownloadError as e:
+                        logging.debug(
+                            "Collection youtube ids for unit:{}".format(unit_url)
+                        )
+                        info_dict = ydl.extract_info(
+                            unit_url, download=False, process=False
+                        )
+                        for video in info_dict["entries"]:
+                            video_id = video.get("url", None)
+                            self.lesson_youtube_ids.append(video_id)
+                            lessons_counter += 1
+                    except Exception as e:
+                        print("Youtube-dl: An error occured!", e)
+                        sys.exit(1)
+
                 self.unit_ids_counter[unit_url] = lessons_counter
+
         logging.info("Course - Collected Youtube IDs")
 
     def download_course_videos(self):
@@ -362,22 +375,33 @@ class KhanDL:
                     "outtmpl": lesson_output_file,
                     "retries": 20,
                 }
-                try:
-                    with youtube_dl.YoutubeDL(youtube_dl_opts) as ydl:
-                        logging.debug(
-                            "Downloading video[{}] {} of {}:".format(
-                                lesson_youtube_url, counter, number_of_videos
-                            )
+                with youtube_dl.YoutubeDL(youtube_dl_opts) as ydl:
+                    logging.debug(
+                        "Downloading video[{}] {} of {}:".format(
+                            lesson_youtube_url, counter, number_of_videos
                         )
+                    )
+                    try:
                         ydl.download([lesson_youtube_url])
                         counter += 1
-                except Exception as e:
-                    print("Youtube-dl: An error occured!", e)
-                    sys.exit(1)
-                logging.info(
-                    "Course lesson video[{}]downloaded".format(lesson_video_id)
-                )
-            logging.info("Course videos downloaded")
+                    except DownloadError:
+                        error_log = open("error_private_videos.txt", "a")
+                        error_log.write(
+                            str(
+                                lesson_output_file
+                                + ", "
+                                + VIDEO_SITE_URL
+                                + lesson_video_id
+                            )
+                        )
+                        error_log.close()
+                    except Exception as e:
+                        print("Youtube-dl: An error occured!", e)
+                        sys.exit(1)
+                    logging.info(
+                        "Course lesson video[{}]downloaded".format(lesson_video_id)
+                    )
+            logging.info("All course videos downloaded")
 
     def download_course_interactive(self):
         """Downloads the chosen course"""
