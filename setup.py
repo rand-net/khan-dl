@@ -5,10 +5,9 @@ HERE = pathlib.Path(__file__).parent
 
 README = (HERE / "README.md").read_text()
 
-# This call to setup() does all the work
 setup(
     name="khan-dl",
-    version="1.0.9",
+    version="1.2.1",
     description="Download courses from khanacademy.org",
     long_description=README,
     long_description_content_type="text/markdown",
