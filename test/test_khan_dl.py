@@ -1,6 +1,9 @@
 import unittest
 import youtube_dl
-from khan_dl import *
+import sys
+
+sys.path.append("../khan_dl")
+from khan_dl.khan_dl import *
 
 
 class TestKhanDL(unittest.TestCase):
@@ -33,7 +36,7 @@ class TestKhanDL(unittest.TestCase):
         khan_dl.course_url = "https://www.khanacademy.org/math/precalculus"
         khan_dl.get_course_page()
         khan_dl.get_course_unit_urls()
-        self.assertEqual(len(khan_dl.course_unit_urls), 9)
+        self.assertEqual(len(khan_dl.course_unit_urls), 10)
 
     def test_get_course_unit_titles(self):
         print("test_get_course_unit_titles")
@@ -42,7 +45,7 @@ class TestKhanDL(unittest.TestCase):
         khan_dl.get_course_page()
         khan_dl.get_course_unit_titles()
         self.assertIsNotNone(khan_dl.course_unit_titles)
-        self.assertEqual(len(khan_dl.course_unit_titles), 9)
+        self.assertEqual(len(khan_dl.course_unit_titles), 10)
 
     def test_get_course_unit_slugs(self):
         print("test_get_course_unit_slugs")
@@ -52,7 +55,7 @@ class TestKhanDL(unittest.TestCase):
         khan_dl.get_course_title()
         khan_dl.get_course_unit_titles()
         khan_dl.get_course_unit_slugs()
-        self.assertEqual(len(khan_dl.course_unit_slugs), 9)
+        self.assertEqual(len(khan_dl.course_unit_slugs), 10)
 
     def test_youtube_dl_down_playlist(self):
         print("test_youtube_dl_down_playlist")
