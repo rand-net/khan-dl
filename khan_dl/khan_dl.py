@@ -3,8 +3,8 @@ import platform
 import requests
 import sys
 import logging
-from youtube_dl.utils import DownloadError
-import youtube_dl
+from yt_dlp.utils import DownloadError
+import yt_dlp
 
 from typing import List, Dict, Tuple
 from bs4 import BeautifulSoup
@@ -79,7 +79,7 @@ class KhanDL:
         self.unit_slugs_counter = {}
 
     def get_courses(self, selected_domain_url: str) -> Tuple[List[str], List[str]]:
-        """ Returns the list of courses on a domain """
+        """Returns the list of courses on a domain"""
 
         courses, courses_url = [], []
         print("\nDownloading Courses...\n")
@@ -119,7 +119,7 @@ class KhanDL:
         return courses, courses_url
 
     def domain_prompt(self):
-        """ Returns the selected domain """
+        """Returns the selected domain"""
 
         # Domain selection prompt
         domain_completer = FuzzyWordCompleter(
@@ -147,7 +147,7 @@ class KhanDL:
         logging.info("Course Selected")
 
     def get_all_courses(self) -> List[str]:
-        """ Returns URL for all courses """
+        """Returns URL for all courses"""
 
         print("Downloading all Courses from all Domains...")
         all_courses_url = []
@@ -160,7 +160,7 @@ class KhanDL:
         return all_courses_url
 
     def get_course_page(self):
-        """Retrieves course page html """
+        """Retrieves course page html"""
 
         print("Course URL: {}".format(self.course_url))
         try:
@@ -190,7 +190,7 @@ class KhanDL:
         logging.info("Course title retrieved")
 
     def get_course_unit_titles(self):
-        """Retrieves course unit titles """
+        """Retrieves course unit titles"""
 
         for title in self.course_page.find_all(attrs=COURSE_UNIT_TITLE):
             self.course_unit_titles.append(title.text)
@@ -198,7 +198,7 @@ class KhanDL:
         logging.info("Course unit titles retrieved")
 
     def get_course_unit_slugs(self):
-        """Retrieves course unit slugs """
+        """Retrieves course unit slugs"""
 
         counter = 0
         for title in self.course_unit_titles:
@@ -302,7 +302,6 @@ class KhanDL:
                             + str(lesson_counter)
                             + "_"
                             + lesson_title.text.replace(" ", "_")
-                            + ".mp4"
                         )
 
                     lesson_counter += 1
@@ -320,13 +319,13 @@ class KhanDL:
                 self.course_unit_urls,
             ):
                 unit_url = ROOT_URL + unit_url
-                youtube_dl_opts = {
+                yt_dlp_opts = {
                     "logger": MyLogger(),
                     "retries": 20,
                     "ignoreerrors:": True,
                     "skip_download": True,
                 }
-                with youtube_dl.YoutubeDL(youtube_dl_opts) as ydl:
+                with yt_dlp.YoutubeDL(yt_dlp_opts) as ydl:
                     lessons_counter = 0
                     try:
                         logging.debug(
@@ -370,12 +369,12 @@ class KhanDL:
             ):
                 lesson_youtube_url = VIDEO_SITE_URL + lesson_video_id
 
-                youtube_dl_opts = {
+                yt_dlp_opts = {
                     "logger": MyLogger(),
                     "outtmpl": lesson_output_file,
                     "retries": 20,
                 }
-                with youtube_dl.YoutubeDL(youtube_dl_opts) as ydl:
+                with yt_dlp.YoutubeDL(yt_dlp_opts) as ydl:
                     logging.debug(
                         "Downloading video[{}] {} of {}:".format(
                             lesson_youtube_url, counter, number_of_videos

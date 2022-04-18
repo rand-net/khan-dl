@@ -5,7 +5,7 @@ import argparse
 import sys
 from art import tprint
 
-__version__ = "1.2.1"
+__version__ = "1.2.5"
 
 
 def set_log_level(args):
