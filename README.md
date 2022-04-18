@@ -9,9 +9,11 @@ A python script to download courses from  [Khan Academy](https://www.khanacademy
 ## Installation
 
 ```
-$ pip install -U khan-dl
-$ pip install git+https://github.com/rand-net/yt-dlp@fix-khanacademy
+ pip install -U khan-dl
+```
 
+```
+ pip install git+https://github.com/rand-net/yt-dlp@fix-khanacademy
 ```
 
 ## Usage
