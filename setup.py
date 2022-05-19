@@ -7,7 +7,7 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="khan-dl",
-    version="1.2.5",
+    version="1.2.6",
     description="Download courses from khanacademy.org",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -28,6 +28,7 @@ setup(
         "prompt-toolkit",
         "requests",
         "lxml",
+        "yt-dlp",
     ],
     keywords=["khan academy", "khan academy downloader", "video downloader"],
 )
