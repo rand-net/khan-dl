@@ -9,3 +9,4 @@ requests==2.27.1
 soupsieve==2.3.2.post1
 urllib3==1.26.9
 wcwidth==0.2.5
+yt-dlp==2022.5.18

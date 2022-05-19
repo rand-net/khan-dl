@@ -1,19 +1,14 @@
 # khan-dl
 
-A python script to download courses from  [Khan Academy](https://www.khanacademy.org) using [youtube-dl](https://github.com/ytdl-org/youtube-dl) and [beautifulsoup4](https://pypi.org/project/beautifulsoup4/).
+A python script to download courses from [Khan Academy](https://www.khanacademy.org) using [youtube-dl](https://github.com/ytdl-org/youtube-dl) and [beautifulsoup4](https://pypi.org/project/beautifulsoup4/).
 
 ![PyPI](https://img.shields.io/pypi/v/khan-dl?style=flat-square)
 ![GitHub](https://img.shields.io/github/license/rand-net/khan-dl?style=flat-square)
-
 
 ## Installation
 
 ```
  pip install -U khan-dl
-```
-
-```
- pip install git+https://github.com/rand-net/yt-dlp@fix-khanacademy
 ```
 
 ## Usage
@@ -31,8 +26,8 @@ optional arguments:
   -a, --all             Download all Courses from all Domains
 ```
 
-* You can download courses interactively on a prompt, which will list all course
-    domains and their respective courses available with tab completion.
+- You can download courses interactively on a prompt, which will list all course
+  domains and their respective courses available with tab completion.
 
 ```
 $ khan-dl -i
@@ -60,7 +55,7 @@ Collecting Youtube IDs: 100.0% [================================================
 Downloading Videos:   0.0% [>                                                                                                                                          ]   0/ 75 eta [?:??:??]
 ```
 
-* Download a specific course.
+- Download a specific course.
 
 ```
 $  khan-dl -c "https://www.khanacademy.org/math/early-math"
@@ -78,9 +73,9 @@ Generating Path Slugs...
 
 Collecting Youtube IDs: 100.0% [========================================================================================================================================>]   4/  4 eta [00:00]
 Downloading Videos:   0.0% [>                                                                                                                                          ]   0/ 75 eta [?:??:??]
- ```
+```
 
-* Download all courses on traditional subjects like Math, Science, Computing, Humanities, Economics-Finance-Domain.
+- Download all courses on traditional subjects like Math, Science, Computing, Humanities, Economics-Finance-Domain.
 
 ```
 $ khan-dl -a
@@ -127,10 +122,9 @@ Collecting Youtube IDs: 100.0% [================================================
 Downloading Videos:   0.0% [>                                                                                                                                          ]   0/ 75 eta [?:??:??]
 ```
 
-
 ## Other solutions
 
 Khan Academy is also available for offline usage through these Open Source projects:
 
-* [Kolibri](https://learningequality.org/kolibri/)
-* [Kiwix](https://www.kiwix.org/)
+- [Kolibri](https://learningequality.org/kolibri/)
+- [Kiwix](https://www.kiwix.org/)
