@@ -329,7 +329,7 @@ class KhanDL:
                     lessons_counter = 0
                     try:
                         logging.debug(
-                            "Collection youtube ids for unit:{}".format(unit_url)
+                            "Collecting youtube ids for unit:{}".format(unit_url)
                         )
                         info_dict = ydl.extract_info(unit_url, download=False)
                         for video in info_dict["entries"]:
@@ -338,7 +338,7 @@ class KhanDL:
                             lessons_counter += 1
                     except DownloadError as e:
                         logging.debug(
-                            "Collection youtube ids for unit:{}".format(unit_url)
+                            "Collecting youtube ids for unit:{}".format(unit_url)
                         )
                         info_dict = ydl.extract_info(
                             unit_url, download=False, process=False
