@@ -27,7 +27,7 @@ DOMAINS = [
 
 COURSE_HEAD = {"tag": "h2", "class": "_t2uf76"}
 COURSE_URL = {"tag": "a", "class": "_dwmetq"}
-COURSE_TITLE = {"data-test-id": "unit-block-title"}
+COURSE_TITLE = {"data-test-id": "course-unit-title"}
 COURSE_UNIT_TITLE = {"data-test-id": "unit-header"}
 COURSE_SUBUNIT_TITLE_ATTRS = {"data-test-id": "lesson-card-link"}
 COURSE_SUBUNIT_BODY = {"tag": "ul", "class": "_37mhyh"}
