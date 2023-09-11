@@ -25,7 +25,7 @@ DOMAINS = [
 
 # Tags and attributes for parsing HTML
 
-COURSE_HEAD = {"tag": "h2", "class": "_158q6at"}
+COURSE_HEAD = {"tag": "h2", "class": "_t2uf76"}
 COURSE_URL = {"tag": "a", "class": "_dwmetq"}
 COURSE_TITLE = {"data-test-id": "unit-block-title"}
 COURSE_UNIT_TITLE = {"data-test-id": "unit-header"}
@@ -77,6 +77,8 @@ class KhanDL:
         self.output_rel_path = os.getcwd() + "/"
         self.unit_ids_counter = {}
         self.unit_slugs_counter = {}
+        self.nested_courses = []
+        self.selected_course = ""
 
     def get_courses(self, selected_domain_url: str) -> Tuple[List[str], List[str]]:
         """Returns the list of courses on a domain"""
@@ -140,10 +142,15 @@ class KhanDL:
         courses, courses_url = self.get_courses(selected_domain_url)
 
         # Course Selection Prompt
+
+        logging.debug(courses)
         courses_completer = FuzzyWordCompleter(courses)
-        selected_course = courses.index(prompt("Course: ", completer=courses_completer))
-        print("Selected Course: {}".format(courses[selected_course]))
-        self.course_url = courses_url[selected_course]
+        selected_course_index = courses.index(
+            prompt("Course: ", completer=courses_completer)
+        )
+        self.selected_course = courses[selected_course_index]
+        print("Selected Course: {}".format(self.selected_course))
+        self.course_url = courses_url[selected_course_index]
         logging.info("Course Selected")
 
     def get_all_courses(self) -> List[str]:
@@ -193,7 +200,8 @@ class KhanDL:
         """Retrieves course unit titles"""
 
         for title in self.course_page.find_all(attrs=COURSE_UNIT_TITLE):
-            self.course_unit_titles.append(title.text)
+            if "unit" in str(title.text).lower():
+                self.course_unit_titles.append(title.text)
         logging.debug("course_unit_titles:{}".format(self.course_unit_titles))
         logging.info("Course unit titles retrieved")
 
@@ -212,9 +220,14 @@ class KhanDL:
     def get_course_unit_urls(self):
         """Retrieves course unit urls"""
 
+        self.nested_courses = []
         for url in self.course_page.find_all(attrs=COURSE_UNIT_TITLE):
-            self.course_unit_urls.append(url["href"])
+            if int(url["href"].count("/")) > 2:
+                self.course_unit_urls.append(url["href"])
+            else:
+                self.nested_courses.append(url["href"])
         logging.debug("course_unit_urls:{}".format(self.course_unit_urls))
+        logging.debug("nested_courses:{}".format(self.nested_courses))
         logging.info("Course unit urls retrieved")
 
     def get_course_all_slugs(self):
@@ -308,6 +321,7 @@ class KhanDL:
                 unit_lessons_counter += lesson_counter
                 subunit_couter += 1
             self.unit_slugs_counter[course_unit_url] = unit_lessons_counter
+        logging.info(len(self.course_all_slugs))
         logging.info("Course - All slugs generated")
 
     def get_course_youtube_ids(self):
@@ -353,6 +367,8 @@ class KhanDL:
 
                 self.unit_ids_counter[unit_url] = lessons_counter
 
+        logging.info(self.lesson_youtube_ids)
+        logging.info(len(self.lesson_youtube_ids))
         logging.info("Course - Collected Youtube IDs")
 
     def download_course_videos(self):
@@ -374,6 +390,7 @@ class KhanDL:
                     "outtmpl": lesson_output_file,
                     "retries": 20,
                 }
+
                 with yt_dlp.YoutubeDL(yt_dlp_opts) as ydl:
                     logging.debug(
                         "Downloading video[{}] {} of {}:".format(
@@ -397,10 +414,32 @@ class KhanDL:
                     except Exception as e:
                         print("Youtube-dl: An error occured!", e)
                         sys.exit(1)
-                    logging.info(
-                        "Course lesson video[{}]downloaded".format(lesson_video_id)
-                    )
-            logging.info("All course videos downloaded")
+                        logging.info(
+                            "Course lesson video[{}]downloaded".format(lesson_video_id)
+                        )
+        logging.info("All course videos downloaded")
+
+    def reset_course(self):
+        self.domain = ""
+        self.course_url = ""
+        self.course_title = ""
+        self.course_page = ""
+        self.course_unit_titles = []
+        self.course_unit_slugs = []
+        self.course_unit_urls = []
+        self.course_all_slugs = []
+        self.lesson_titles = []
+        self.lesson_youtube_ids = []
+        self.unit_ids_counter = {}
+        self.unit_slugs_counter = {}
+        self.selected_course = ""
+
+    def download_nested_courses(self):
+        self.reset_course()
+        if self.nested_courses:
+            print("\nDownloading nested courses...\n")
+            for nested_course_url in self.nested_courses:
+                self.download_course_given(ROOT_URL + nested_course_url)
 
     def download_course_interactive(self):
         """Downloads the chosen course"""
@@ -416,6 +455,7 @@ class KhanDL:
         self.get_course_all_slugs()
         self.get_course_youtube_ids()
         self.download_course_videos()
+        self.download_nested_courses()
 
     def download_course_given(self, course_url: str):
         """Downloads the given course"""

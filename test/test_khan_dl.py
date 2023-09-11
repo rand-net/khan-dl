@@ -1,5 +1,5 @@
 import unittest
-import youtube_dl
+import yt_dlp
 import sys
 
 sys.path.append("../khan_dl")
@@ -64,7 +64,7 @@ class TestKhanDL(unittest.TestCase):
         )
         lesson_youtube_ids = []
         youtube_dl_opts = {}
-        with youtube_dl.YoutubeDL(youtube_dl_opts) as ydl:
+        with yt_dlp.YoutubeDL(youtube_dl_opts) as ydl:
             info_dict = ydl.extract_info(course_unit_url, download=False)
             for video in info_dict["entries"]:
                 video_id = video.get("id", None)

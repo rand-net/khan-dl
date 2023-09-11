@@ -7,7 +7,7 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="khan-dl",
-    version="1.2.6",
+    version="1.2.7",
     description="Download courses from khanacademy.org",
     long_description=README,
     long_description_content_type="text/markdown",
