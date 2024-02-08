@@ -4,12 +4,12 @@ on:
   push:
     tags:
       - "v*"
-
- jobs:
-  pypi-publish:
-    name: upload release to PyPI
-    runs-on: ubuntu-latest
-    # Specifying a GitHub environment is optional, but strongly encouraged
+  jobs:
+    pypi-publish:
+      name: upload release to PyPI
+    runs-on:
+      ubuntu-latest
+      # Specifying a GitHub environment is optional, but strongly encouraged
     environment: release
     permissions:
       # IMPORTANT: this permission is mandatory for trusted publishing
