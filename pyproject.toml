@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "khan-dl"
+version = "1.2.9"
+description = "Download courses from khanacademy.org"
+authors = ["rand-net"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/rand-net/khan-dl"
+repository = "https://github.com/rand-net/khan-dl"
+keywords = ["khan academy", "khan academy downloader", "video downloader"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+]
+
+[tool.poetry.scripts]
+khan-dl = "khan_dl.__init__:main"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+yt-dlp = { git = "https://github.com/yt-dlp/yt-dlp", rev="90386eaeb58225123d98d4edd03e1823f05f07d5"}
+#yt-dlp = "^2023.12.30"
+art = "^6.1"
+beautifulsoup4 = "^4.12.3"
+prompt-toolkit = "^3.0.43"
+requests = "^2.31.0"
+lxml = "^5.1.0"
+
+[tool.poetry.dev-dependencies]
+
+[tool.semantic_release]
+version_variable = [
+    "khan_dl/__init__.py:__version__",
+    "pyproject.toml:version"
+]
+branch = "main"
+upload_to_pypi = true
+upload_to_release = true
+build_command = "pip install poetry && poetry build"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
