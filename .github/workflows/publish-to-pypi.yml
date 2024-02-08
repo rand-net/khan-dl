@@ -5,33 +5,17 @@ on:
     tags:
       - "v*"
 
-jobs:
-  build-and-publish:
-    runs-on:
-      ubuntu-latest
-      # Specifying a GitHub environment is optional, but strongly encouraged
+ jobs:
+  pypi-publish:
+    name: upload release to PyPI
+    runs-on: ubuntu-latest
+    # Specifying a GitHub environment is optional, but strongly encouraged
     environment: release
     permissions:
       # IMPORTANT: this permission is mandatory for trusted publishing
       id-token: write
     steps:
-      - name: Check out the repository
-        uses: actions/checkout@v3
+      # retrieve your distributions here
 
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: 3.11
-
-      - name: Install Poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python3 -
-
-      - name: Configure Poetry
-        run: |
-          poetry config virtualenvs.create false
-
-      - name: Build and publish to PyPI
-        run: |
-          poetry build
-          poetry publish
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
