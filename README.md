@@ -7,8 +7,10 @@ A python script to download courses from [Khan Academy](https://www.khanacademy.
 
 ## Installation
 
+Once yt-dlp is updated, you can install khan-dl from PyPI. Until then, install the latest version using
+
 ```
- pip install -U khan-dl
+pip install git+https://github.com/rand-net/khan-dl
 ```
 
 ## Usage
