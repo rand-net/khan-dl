@@ -1,16 +1,14 @@
 # khan-dl
 
-A python script to download courses from [Khan Academy](https://www.khanacademy.org) using [youtube-dl](https://github.com/ytdl-org/youtube-dl) and [beautifulsoup4](https://pypi.org/project/beautifulsoup4/).
+A python script to download courses from [Khan Academy](https://www.khanacademy.org) using [yt-dlp](https://github.com/yt-dlp/yt-dlp) and [beautifulsoup4](https://pypi.org/project/beautifulsoup4/).
 
 ![PyPI](https://img.shields.io/pypi/v/khan-dl?style=flat-square)
 ![GitHub](https://img.shields.io/github/license/rand-net/khan-dl?style=flat-square)
 
 ## Installation
 
-Once yt-dlp is updated, you can install khan-dl from PyPI. Until then, install the latest version using
-
 ```
-pip install git+https://github.com/rand-net/khan-dl
+pip install khan-dl -U
 ```
 
 ## Usage
