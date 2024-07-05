@@ -27,9 +27,9 @@ DOMAINS = [
 
 COURSE_HEAD = {"tag": "h2", "class": "_t2uf76"}
 COURSE_URL = {"tag": "a", "class": "_dwmetq"}
-COURSE_TITLE = {"data-test-id": "course-unit-title"}
-COURSE_UNIT_TITLE = {"data-test-id": "unit-header"}
-COURSE_SUBUNIT_TITLE_ATTRS = {"data-test-id": "lesson-card-link"}
+COURSE_TITLE = {"data-testid": "course-unit-title"}
+COURSE_UNIT_TITLE = {"data-testid": "unit-header"}
+COURSE_SUBUNIT_TITLE_ATTRS = {"data-testid": "lesson-card-link"}
 COURSE_SUBUNIT_BODY = {"tag": "ul", "class": "_37mhyh"}
 COURSE_LESSON_BODY = {"tag": "div", "class_i": "_10ct3cvu", "class_ii": "_1p9458yw"}
 COURSE_LESSON_SPAN = {"tag": "span", "class": "_e296pg"}
@@ -200,8 +200,9 @@ class KhanDL:
         """Retrieves course unit titles"""
 
         for title in self.course_page.find_all(attrs=COURSE_UNIT_TITLE):
-            if "unit" in str(title.text).lower():
-                self.course_unit_titles.append(title.text)
+            title_text = title.select_one("h2._k50sd54").text
+            if "unit" in str(title_text).lower():
+                self.course_unit_titles.append(title_text)
         logging.debug("course_unit_titles:{}".format(self.course_unit_titles))
         logging.info("Course unit titles retrieved")
 
@@ -238,7 +239,6 @@ class KhanDL:
         for course_unit_url, course_unit_slug in zip(
             self.course_unit_urls, self.course_unit_slugs
         ):
-
             unit_lessons_counter = 0
             # -> Unit Page
             try:
@@ -270,7 +270,6 @@ class KhanDL:
                     COURSE_SUBUNIT_BODY["tag"], class_=COURSE_SUBUNIT_BODY["class"]
                 ),
             ):
-
                 logging.debug("course_subunit_title:{}".format(course_subunit_title))
                 lesson_counter = 0
                 # ->  Lesson Block
@@ -321,7 +320,7 @@ class KhanDL:
                 unit_lessons_counter += lesson_counter
                 subunit_couter += 1
             self.unit_slugs_counter[course_unit_url] = unit_lessons_counter
-        logging.info(len(self.course_all_slugs))
+        logging.info("Course -  Slugs = " + str(len(self.course_all_slugs)))
         logging.info("Course - All slugs generated")
 
     def get_course_youtube_ids(self):
